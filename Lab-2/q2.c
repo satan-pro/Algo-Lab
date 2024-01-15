@@ -27,11 +27,11 @@ void push(stack s, int n)
     s->arr[++s->top]=n;
 }
 
-int pop(stack s)
+int peek(stack s)
 {
     if(!isEmpty(s))
     {
-        return s->arr[s->top--];
+        return s->arr[s->top];
     }
 }
 
@@ -41,23 +41,35 @@ stack primeFactors(int n, stack s)
     int k=n;
     for(int i=2; i<=k; i++)
     {
-        while(n%i==0)s1->arr = (int*)malloc(100*sizeof(int));
-    s2->arr = (int*)malloc(100*sizeof(int));
+        while(n%i==0)
+        {
+            printf("%d\n",i);
+            push(s,i);
+            n/=i;
+        }
+    }
+}
+
+int compareValues(stack s1, stack s2, int prod)
 {
     while(!isEmpty(s1)&&!isEmpty(s2))
     {
-        int m1 = pop(s1);
-        int m2 = pop(s2);
+        printf("%d %d\n", s1->top, s2->top);
+        int m1 = peek(s1);
+        int m2 = peek(s2);
         printf("%d %d\n", m1, m2);
+        printf("%d\n", prod);
         if(m1==m2)
         {
             prod*=m1;
+            s1->top--;
+            s2->top--;
         }
         else if(m1>m2){
-            pop(s1);
+            s1->top--;
         }
-        else{
-            pop(s2);
+        else if(m1<m2){
+            s2->top--;
         }
     }
     return prod;
