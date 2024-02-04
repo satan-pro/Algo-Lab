@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void dfs(int *v, int **adj_mat, int n, stack s)
+void dfs(int *v, int *adj_mat[], int n, stack s)
 {
     int i = 0;
     do
@@ -48,6 +48,10 @@ int main()
             {
                 adj_mat[i][j] = 1;
                 adj_mat[j][i] = 1;
+            }
+            else{
+                adj_mat[i][j]=0;
+                adj_mat[i][j]=0;
             }
         }
     }
