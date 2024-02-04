@@ -2,16 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 
+int opcount=0;
 int find(char *inp, char *pattern)
 {
     int inpLen = strlen(inp);
     int patternLen = strlen(pattern);
+    printf("%d\n", inpLen);
     int i = 0;
     while (i <= inpLen - patternLen)
-    {
+    {   
+        opcount++;
         int j = 0;
         while (j <= patternLen && inp[i + j] == pattern[j])
         {
+            opcount++;
             j++;
             if (j == patternLen)
             {
@@ -32,5 +36,6 @@ int main()
     gets(pattern);
 
     printf("Pattern found at : %d\n", find(inp, pattern));
+    printf("Opcount : %d\n", opcount);
     return 0;
 }
