@@ -29,7 +29,6 @@ int sourceRemoval(int* visited2, graph g, stack s1, int i, int count)
         if(!visited2[i])
         {
             push(s1, i);
-            printf("%d\n", i);
             count++;
             visited2[i]=1;
             node head=g->list[i];
@@ -61,7 +60,7 @@ int main()
         scanf("%d %d", &src, &dest);
         g = createEdgeDirected(g, src, dest);
     }
-    showGraph(g);
+  
     int visited[vertices];
     int visited2[vertices];
     for(int i=0; i<vertices; i++)
