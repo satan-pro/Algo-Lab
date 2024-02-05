@@ -1,46 +1,53 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "stack.h"
-
-void dfs(int *v, int *adj_mat[], int n, stack s)
+int n;
+void dfs(int* v, int i, int **adj_mat, int n, stack s)
 {
-    int i = 0;
-    do
+    /* push(s, i);
+    v[i]=1;
+    int curr = pop(s);
+    for (int j = 0;  j< n; j++)     
     {
-        if (v[i])
+        printf("%d ", curr);
+        if(adj_mat[curr][j]==1 && !v[j])
         {
-            i = pop(s);
-            printf("%d ", i);
+            push(s, j);
         }
-        else
+    } */
+    push(s, i);
+    printf("Pushed : %d\n", i);
+    v[i]=0;
+    while(!isEmpty(s))
+    {
+        int curr=pop(s);
+        printf("Popped : %d\n", curr);
+        printf("%d ", curr);
+        for(int j=0; j<n; j++)
         {
-            push(s,i);
-            v[i] = 1;
-            for (int j = 0; j < n; j++)
+            if(adj_mat[i][j]==1 && !v[j])
             {
-                int vertex = adj_mat[i][j];
-                if (vertex == 1)
-                {
-                    i = j;
-                    break;
-                }
+                v[j]=1;
+                push(s, j);
+                printf("Pushed : %d\n", j);
             }
         }
-    } while (!v[i]);
+    }
+    
 }
+
 int main()
 {
     stack s = (stack)malloc(sizeof(struct Stack));
     s->top = -1;
 
-    int n;
     printf("Enter no of vertices : ");
     scanf("%d", &n);
-    int adj_mat[n][n];
+    int** adj_mat = (int**)malloc(n*sizeof(int*));
     int ch;
     for (int i = 0; i < n; i++)
     {
-        for (int j = i + 1; j < n; j++)
+        for (int j = i; j < n; j++)
         {
             printf("Is vertex %d connected to vertex %d?(1/0) : ", i, j);
             scanf("%d", &ch);
@@ -56,9 +63,16 @@ int main()
         }
     }
     int v[n];
-    /*for(int i=0; i<n; i++)
+    for(int i=0; i<n; i++)
     {
         v[i]=0;
-    }*/
-    dfs(v, adj_mat, n, s);
+    }
+    for(int i=0; i<n; i++)
+    {
+        if(v[i]==0)
+        {
+             dfs(v, i, adj_mat, n, s);
+        }
+    }
 }
+       
